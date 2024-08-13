@@ -76,6 +76,12 @@ functions:
           method: post
     environment:
       SNS_TOPIC_ARN: ${ssm:/dev/sns_topic_arn}
+  getToken:
+    handler: src/getToken.getToken
+    events:
+      - httpApi:
+          path: /get-token
+          method: get
 
 resources:
   Resources:
