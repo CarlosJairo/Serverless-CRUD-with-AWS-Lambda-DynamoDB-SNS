@@ -7,7 +7,7 @@ const deleteUser = async (event) => {
 
     await dynamoDb
       .delete({
-        TableName: "UserTable",
+        TableName: process.env.TABLE_NAME,
         Key: {
           id,
         },

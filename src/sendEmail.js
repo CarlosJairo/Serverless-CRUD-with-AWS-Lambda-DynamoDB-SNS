@@ -7,7 +7,7 @@ const sendEmail = async (event) => {
   const params = {
     Message: message,
     Subject: subject,
-    TopicArn: "arn:aws:sns:us-east-1:861276089505:snsusers",
+    TopicArn: process.env.SNS_TOPIC_ARN,
   };
 
   try {

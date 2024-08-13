@@ -16,7 +16,7 @@ const addUser = async (event) => {
   try {
     await dynamoDb
       .put({
-        TableName: "UserTable",
+        TableName: process.env.TABLE_NAME,
         Item: newUser,
       })
       .promise();

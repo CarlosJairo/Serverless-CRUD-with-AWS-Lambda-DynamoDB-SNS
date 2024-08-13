@@ -7,7 +7,7 @@ const getUser = async (event) => {
 
     const result = await dynamo
       .get({
-        TableName: "UserTable",
+        TableName: process.env.TABLE_NAME,
         Key: {
           id,
         },

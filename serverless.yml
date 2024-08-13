@@ -14,9 +14,12 @@ provider:
       Action:
         - dynamodb:*
         - sns:Publish
+        - ssm:GetParameter
+        - ssm:GetParameters
       Resource:
         - arn:aws:dynamodb:us-east-1:861276089505:table/UserTable
         - arn:aws:sns:us-east-1:861276089505:snsusers
+        - arn:aws:ssm:us-east-1:861276089505:parameter/dev/*
 
 functions:
   hello:
@@ -31,43 +34,55 @@ functions:
       - httpApi:
           path: /users
           method: post
+    environment:
+      TABLE_NAME: ${ssm:/dev/table_name}
   getUsers:
     handler: src/getUsers.getUsers
     events:
       - httpApi:
           path: /users
           method: get
+    environment:
+      TABLE_NAME: ${ssm:/dev/table_name}
   getUser:
     handler: src/getUser.getUser
     events:
       - httpApi:
           path: /user/{id}
           method: get
+    environment:
+      TABLE_NAME: ${ssm:/dev/table_name}
   updateUser:
     handler: src/updateUser.updateUser
     events:
       - httpApi:
           path: /user/{id}
           method: put
+    environment:
+      TABLE_NAME: ${ssm:/dev/table_name}
   deleteUser:
     handler: src/deleteUser.deleteUser
     events:
       - httpApi:
           path: /user/{id}
           method: delete
+    environment:
+      TABLE_NAME: ${ssm:/dev/table_name}
   sendEmail:
     handler: src/sendEmail.sendEmail
     events:
       - httpApi:
           path: /send-email
           method: post
+    environment:
+      SNS_TOPIC_ARN: ${ssm:/dev/sns_topic_arn}
 
 resources:
   Resources:
     UserTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: UserTable
+        TableName: ${ssm:/dev/table_name}
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: id

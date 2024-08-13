@@ -9,7 +9,7 @@ const updateUser = async (event) => {
 
     await dynamoDb
       .update({
-        TableName: "UserTable",
+        TableName: process.env.TABLE_NAME,
         Key: { id },
         UpdateExpression: "set nombre = :nombre, cedula = :cedula",
         ExpressionAttributeValues: {

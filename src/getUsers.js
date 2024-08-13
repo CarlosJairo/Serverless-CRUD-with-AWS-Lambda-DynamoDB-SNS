@@ -6,7 +6,7 @@ const getUsers = async (event) => {
 
     const result = await dinamoDb
       .scan({
-        TableName: "UserTable",
+        TableName: process.env.TABLE_NAME,
       })
       .promise();
 
