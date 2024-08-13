@@ -10,14 +10,19 @@ const sendEmail = async (event) => {
     TopicArn: process.env.SNS_TOPIC_ARN,
   };
 
+  console.log("Parametros: ", params);
+
   try {
     await sns.publish(params).promise();
+
+    console.log("Correo enviado satisfactoriamente");
 
     return {
       status: 200,
       body: JSON.stringify({ message: "Correo enviado satisfactorimente" }),
     };
   } catch (error) {
+    console.error("Error al enviar correo: ", error);
     return {
       status: 500,
       body: JSON.stringify({ error: error.message }),

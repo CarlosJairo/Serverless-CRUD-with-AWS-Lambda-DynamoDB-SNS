@@ -4,6 +4,8 @@ const cognito = new AWS.CognitoIdentityServiceProvider();
 exports.getToken = async (event) => {
   const { username, password } = JSON.parse(event.body);
 
+  console.log(`Datos del usuario: ${username} ${password}`);
+
   const params = {
     AuthFlow: "USER_PASSWORD_AUTH",
     ClientId: "625bq36ubnoros3mpfabp9tn79",

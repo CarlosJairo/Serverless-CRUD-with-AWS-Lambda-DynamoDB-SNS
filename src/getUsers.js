@@ -12,11 +12,15 @@ const getUsers = async (event) => {
 
     const users = result.Items;
 
+    console.log("Usuarios: ", users);
+
     return {
       status: 200,
       body: { users },
     };
   } catch (error) {
+    console.log("Error al obtener usuarios", error);
+
     return {
       status: 500,
       body: { error: error.message },

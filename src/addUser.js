@@ -7,6 +7,8 @@ const addUser = async (event) => {
   const { nombre, cedula } = JSON.parse(event.body);
   const id = v4();
 
+  console.log("Datos de entrada:", nombre, cedula);
+
   const newUser = {
     id,
     nombre,
@@ -20,6 +22,8 @@ const addUser = async (event) => {
         Item: newUser,
       })
       .promise();
+
+    console.log("Usuario agregado correctamente", newUser);
     return {
       status: 201,
       body: JSON.stringify({
@@ -28,6 +32,7 @@ const addUser = async (event) => {
       }),
     };
   } catch (error) {
+    console.log("Error al registrar usuario.", error);
     return {
       status: 500,
       body: JSON.stringify({
